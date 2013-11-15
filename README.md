@@ -4,7 +4,7 @@ This gem allows embedding of an auxillary object in an ActiveRecord::Base model 
 This brings the niceties of Mongo's embedded documents to PostgreSQL.
 It's modelled after Mongoid's embedded documents.
 
-An example worth a thousand words:
+An example is worth a thousand words:
 
 ```ruby
 
@@ -22,7 +22,7 @@ An example worth a thousand words:
     field :number, type: Fixnum
     field :zip, type: Fixnum
     field :business, type: Boolean
-    # though it's probably a very idea to store large arrays
+    # though it's probably a very bad idea to store large arrays
     field :phones, type: Array
 
     validates_presence_of :street, :number

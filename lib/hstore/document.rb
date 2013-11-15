@@ -136,10 +136,10 @@ module Hstore
       PgHstore.dump(attributes_after_type_cast, true)
     end
 
-    protected
+    private
+
     attr_accessor :_owner
 
-    private
     def embedded_as
       self.class.name.demodulize.underscore
     end
@@ -151,7 +151,6 @@ module Hstore
 
     def create_or_update
       raise OwnerMissingError unless _owner
-      # debugger
       changed_attributes.clear if _owner.update_attribute(embedded_as, self)
     end
 

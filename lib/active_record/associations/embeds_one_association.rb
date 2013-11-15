@@ -30,8 +30,8 @@ module ActiveRecord
       end
 
       def replace(record, save = true)
+        @reader = record
         if record
-          @reader = record
           record.send(:_owner=, owner)
         end
         owner.send(:write_attribute, reflection.name, record ? record.to_hstore : nil)
@@ -63,9 +63,7 @@ module ActiveRecord
       def create_record(attributes, options, raise_error = false)
         build_record(attributes, options).tap do |record|
           yield record if block_given?
-          # saved = record.save
-          saved = owner.save
-          replace(record)
+          saved = replace(record)
           raise RecordInvalid.new(record) if !saved && raise_error
         end
       end
