@@ -43,6 +43,11 @@ An example is worth a thousand words:
   person.address.destroy
 ```
 
+## TODO
+
+* Rails 4 support
+* Query support, e.g. Person.where('address.street' => 'Elm')
+
 ## Contributing to hstore-document
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
