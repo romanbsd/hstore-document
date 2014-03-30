@@ -52,7 +52,12 @@ describe Hstore::Document do
     end
 
     it "unserializes from hstore" do
-      obj = Address.from_hstore(data)
+      serialized = if ActiveRecord::VERSION::MAJOR < 4
+        data
+      else
+        {"street"=>"Elm","number"=>"13","business"=>"t"}
+      end
+      obj = Address.from_hstore(serialized)
       obj.should be_a_kind_of(Address)
       obj.street.should eq('Elm')
       obj.business.should eq(true)

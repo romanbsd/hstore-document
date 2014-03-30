@@ -5,7 +5,6 @@ require 'active_model/translation'
 require 'active_model/validations'
 require 'active_record/readonly_attributes'
 require 'pg_hstore'
-require 'activerecord-postgres-hstore'
 require 'hstore/fields'
 
 module Hstore
@@ -45,12 +44,12 @@ module Hstore
 
       if options[:serialized] and attributes.present?
         attributes = attributes.stringify_keys
-        serialized_attributes.each do |key, coder|
+        self.class.serialized_attributes.each do |key, coder|
           if attributes.key?(key)
             attributes[key] = Attribute.new(coder, attributes[key], :serialized)
           end
         end
-        assign_attributes(attributes.except(serialized_attributes.keys))
+        assign_attributes(attributes.except(self.class.serialized_attributes.keys))
       else
         assign_attributes(attributes)
       end
@@ -167,7 +166,10 @@ module Hstore
     module ClassMethods
 
       def from_hstore(data)
-        new(PgHstore.load(data), serialized: true)
+        if ActiveRecord::VERSION::MAJOR < 4
+          data = PgHstore.load(data)
+        end
+        new(data, serialized: true)
       end
 
       def field(name, options = {})

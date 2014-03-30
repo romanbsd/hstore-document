@@ -12,9 +12,10 @@ group :development do
   gem "jeweler", "~> 1.8.7"
   gem "pry"
   gem "pry-debugger"
-  gem "activerecord", "~>3.2"
-  gem "pg-hstore"
-  gem "activerecord-postgres-hstore"
   gem "guard"
   gem "guard-rspec"
 end
+
+gem 'pg'
+gem 'pg-hstore'
+gem 'activerecord', '>=3.2', '<4.1'

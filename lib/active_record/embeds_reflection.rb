@@ -15,20 +15,26 @@ module ActiveRecord
     end
 
     module ClassMethods # :nodoc:
-      def create_reflection(macro, name, options, active_record)
-        case macro
-        when :has_many, :belongs_to, :has_one, :has_and_belongs_to_many, :embeds_one
-          klass = options[:through] ? ThroughReflection : AssociationReflection
-          reflection = klass.new(macro, name, options, active_record)
-        when :composed_of
-          reflection = AggregateReflection.new(macro, name, options, active_record)
+      if ActiveRecord::VERSION::MAJOR < 4
+        def create_reflection_with_embeds(macro, name, options, active_record)
+          unless macro == :embeds_one
+            return create_reflection_without_embeds(macro, name, options, active_record)
+          end
+          AssociationReflection.new(macro, name, options, active_record).tap do |reflection|
+            reflections.merge!(name => reflection)
+          end
         end
-
-        # The original had:
-        # self.reflections = self.reflections.merge(name => reflection)
-        reflections.merge!(name => reflection)
-        reflection
+      else
+        def create_reflection_with_embeds(macro, name, scope, options, active_record)
+          unless macro == :embeds_one
+            return create_reflection_without_embeds(macro, name, scope, options, active_record)
+          end
+          AssociationReflection.new(macro, name, scope, options, active_record).tap do |reflection|
+            reflections.merge!(name => reflection)
+          end
+        end
       end
+      alias_method_chain :create_reflection, :embeds
     end
   end
 end

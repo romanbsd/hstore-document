@@ -9,7 +9,11 @@ module ActiveRecord
       # @option options [String] :class_name Name of the associated class
       def embeds(name, options = {})
         validates_associated(name) unless options.delete(:validate) == false
-        Builder::EmbedsOne.build(self, name, options)
+        if ActiveRecord::VERSION::MAJOR < 4
+          Builder::EmbedsOne.build(self, name, options)
+        else
+          Builder::EmbedsOne.build(self, name, options, nil)
+        end
       end
     end
 
@@ -54,8 +58,8 @@ module ActiveRecord
       end
 
       private
-      def build_record(attributes, options)
-        reflection.build_association(attributes, options) do |record|
+      def build_record(attributes, options = nil)
+        reflection.build_association(attributes) do |record|
           record.assign_attributes(attributes, without_protection: true)
         end
       end
