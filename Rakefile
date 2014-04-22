@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "hstore-document"
   gem.homepage = "http://github.com/romanbsd/hstore-document"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Embedded documents using HStore}
+  gem.description = %Q{Allows embedding documents in ActiveRecord models using PostgreSQL HStore}
   gem.email = "roman.shterenzon@gmail.com"
   gem.authors = ["Roman Shterenzon"]
   # dependencies defined in Gemfile
