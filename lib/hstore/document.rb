@@ -166,7 +166,7 @@ module Hstore
     module ClassMethods
 
       def from_hstore(data)
-        if ActiveRecord::VERSION::MAJOR < 4
+        if ActiveRecord.version.segments[0] < 4
           data = PgHstore.load(data)
         end
         new(data, serialized: true)

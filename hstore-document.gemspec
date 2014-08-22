@@ -52,7 +52,7 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<pg>, [">= 0"])
       s.add_runtime_dependency(%q<pg-hstore>, [">= 0"])
-      s.add_runtime_dependency(%q<activerecord>, ["< 4.1", ">= 3.2"])
+      s.add_runtime_dependency(%q<activerecord>, ["< 4.2", ">= 3.2"])
       s.add_development_dependency(%q<rspec>, ["~> 2.14"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0"])
@@ -64,7 +64,7 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<pg>, [">= 0"])
       s.add_dependency(%q<pg-hstore>, [">= 0"])
-      s.add_dependency(%q<activerecord>, ["< 4.1", ">= 3.2"])
+      s.add_dependency(%q<activerecord>, ["< 4.2", ">= 3.2"])
       s.add_dependency(%q<rspec>, ["~> 2.14"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_dependency(%q<bundler>, ["~> 1.0"])
@@ -77,7 +77,7 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<pg>, [">= 0"])
     s.add_dependency(%q<pg-hstore>, [">= 0"])
-    s.add_dependency(%q<activerecord>, ["< 4.1", ">= 3.2"])
+    s.add_dependency(%q<activerecord>, ["< 4.2", ">= 3.2"])
     s.add_dependency(%q<rspec>, ["~> 2.14"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
     s.add_dependency(%q<bundler>, ["~> 1.0"])
@@ -88,4 +88,3 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<guard-rspec>, [">= 0"])
   end
 end
-

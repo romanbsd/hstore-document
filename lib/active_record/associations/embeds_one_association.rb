@@ -2,17 +2,32 @@ require 'active_record/associations/association'
 
 module ActiveRecord
   module Associations
-    module ClassMethods
-      # @param [Symbol, String] name of association
-      # @param [Hash] options
-      # @option options [Boolean] :validate Validate associaited object (default: true)
-      # @option options [String] :class_name Name of the associated class
-      def embeds(name, options = {})
-        validates_associated(name) unless options.delete(:validate) == false
-        if ActiveRecord::VERSION::MAJOR < 4
-          Builder::EmbedsOne.build(self, name, options)
-        else
-          Builder::EmbedsOne.build(self, name, options, nil)
+    if (ActiveRecord.version.segments[0] + ActiveRecord.version.segments[1] / 10.0) >= 4.1
+      module ClassMethods
+        # @param [Symbol, String] name of association
+        # @param scope
+        # @param [Hash] options
+        # @option options [Boolean] :validate Validate associaited object (default: true)
+        # @option options [String] :class_name Name of the associated class
+        def embeds(name, scope = nil, options = {}, &extension)
+          validates_associated(name) unless options.delete(:validate) == false
+          reflection = Builder::EmbedsOne.build(self, name, options, nil)
+          Reflection.add_reflection self, name, reflection
+        end
+      end
+    else
+      module ClassMethods
+        # @param [Symbol, String] name of association
+        # @param [Hash] options
+        # @option options [Boolean] :validate Validate associaited object (default: true)
+        # @option options [String] :class_name Name of the associated class
+        def embeds(name, options = {})
+          validates_associated(name) unless options.delete(:validate) == false
+          if ActiveRecord::VERSION::MAJOR < 4
+            Builder::EmbedsOne.build(self, name, options)
+          else
+            Builder::EmbedsOne.build(self, name, options, nil)
+          end
         end
       end
     end
