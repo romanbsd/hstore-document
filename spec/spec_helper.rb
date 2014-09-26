@@ -9,6 +9,8 @@ require 'pry'
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
+I18n.enforce_available_locales = true
+
 RSpec.configure do |config|
   config.before(:suite) do
     ActiveRecord::Base.establish_connection({
@@ -16,7 +18,8 @@ RSpec.configure do |config|
       encoding: 'unicode',
       database: 'hstore_document',
       username: 'postgres',
-      password: 'postgres'
+      password: 'postgres',
+      host: 'localhost'
     })
     # ActiveRecord::Base.logger = Logger.new(STDERR)
   end

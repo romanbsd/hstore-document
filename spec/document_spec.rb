@@ -6,15 +6,15 @@ describe Hstore::Document do
 
   describe "Instantiation" do
     it "builds" do
-      subject.street.should eq('Elm')
-      subject.number.should eq(13)
+      expect(subject.street).to eq('Elm')
+      expect(subject.number).to eq(13)
     end
 
     it "has defaults" do
       address = Address.new
-      address.street.should eq('unknown')
+      expect(address.street).to eq('unknown')
       address.street = nil
-      address.street.should be_nil
+      expect(address.street).to be_nil
     end
   end
 
@@ -23,13 +23,13 @@ describe Hstore::Document do
 
     it "validates" do
       subject.street = nil
-      subject.should_not be_valid
-      subject.errors[:street].should_not be_empty
-      subject.errors[:number].should_not be_empty
+      expect(subject).not_to be_valid
+      expect(subject.errors[:street]).not_to be_empty
+      expect(subject.errors[:number]).not_to be_empty
 
       subject.street = 'Oak'
       subject.number = 7
-      subject.should be_valid
+      expect(subject).to be_valid
     end
   end
 
@@ -38,7 +38,7 @@ describe Hstore::Document do
     let(:data) { %{"street"=>"Elm","number"=>"13","business"=>"t"} }
 
     it "serializes to json" do
-      subject.as_json.should eq({
+      expect(subject.as_json).to eq({
         'street' => 'Elm',
         'number' => 13,
         'business' => true
@@ -46,9 +46,9 @@ describe Hstore::Document do
     end
 
     it "serializes to hstore" do
-      subject.to_hstore.should eq(data)
+      expect(subject.to_hstore).to eq(data)
       subject.business = false
-      subject.to_hstore.should eq(%{"street"=>"Elm","number"=>"13","business"=>"f"})
+      expect(subject.to_hstore).to eq(%{"street"=>"Elm","number"=>"13","business"=>"f"})
     end
 
     it "unserializes from hstore" do
@@ -58,10 +58,10 @@ describe Hstore::Document do
         {"street"=>"Elm","number"=>"13","business"=>"t"}
       end
       obj = Address.from_hstore(serialized)
-      obj.should be_a_kind_of(Address)
-      obj.street.should eq('Elm')
-      obj.business.should eq(true)
-      obj.number.should eq(13)
+      expect(obj).to be_a_kind_of(Address)
+      expect(obj.street).to eq('Elm')
+      expect(obj.business).to eq(true)
+      expect(obj.number).to eq(13)
     end
 
   end
@@ -69,11 +69,11 @@ describe Hstore::Document do
   describe "State change tracking" do
     subject { Address.new }
 
-    it { should_not be_changed }
+    it { is_expected.not_to be_changed }
 
     it "is changed when attribute is changed" do
       subject.street = 'Elm'
-      subject.should be_changed
+      expect(subject).to be_changed
     end
 
     it "destroys" do
