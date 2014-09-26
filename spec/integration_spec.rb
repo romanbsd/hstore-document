@@ -12,7 +12,7 @@ describe "Embedded" do
   describe "Assignment" do
     it "assigns" do
       subject.address = address
-      subject.address.should eq(address)
+      expect(subject.address).to eq(address)
     end
   end
 
@@ -20,7 +20,7 @@ describe "Embedded" do
     subject { Person.create!(address: address) }
 
     it "saves" do
-      subject.reload.address.should eq(address)
+      expect(subject.reload.address).to eq(address)
     end
   end
 
@@ -28,24 +28,24 @@ describe "Embedded" do
     subject { Person.create!(address: address) }
 
     it "tracks persisted state" do
-      subject.reload.address.should be_persisted
+      expect(subject.reload.address).to be_persisted
     end
 
     it "tracks destroyed state" do
       subject.destroy
-      subject.address.should be_destroyed
+      expect(subject.address).to be_destroyed
     end
 
     it "destroys" do
       subject.address.destroy
-      subject.should_not be_destroyed
-      subject.reload.address.should be_nil
+      expect(subject).not_to be_destroyed
+      expect(subject.reload.address).to be_nil
     end
 
     it "updates" do
       subject.address.number = 17
       subject.address.save
-      subject.reload.address.number.should eq(17)
+      expect(subject.reload.address.number).to eq(17)
     end
 
     it "creates" do
@@ -53,7 +53,7 @@ describe "Embedded" do
       address = Address.new(valid_attributes)
       person.address = address
       person.address.save
-      person.reload.address.should eq(address)
+      expect(person.reload.address).to eq(address)
     end
 
   end
@@ -63,18 +63,18 @@ describe "Embedded" do
 
     it "assigns" do
       address = subject.address
-      address.street.should eq('Birch')
-      address.number.should eq(1)
-      address.business.should eq(false)
+      expect(address.street).to eq('Birch')
+      expect(address.number).to eq(1)
+      expect(address.business).to eq(false)
     end
 
     it "saves" do
       subject.save!
       subject.reload
       address = subject.address
-      address.street.should eq('Birch')
-      address.number.should eq(1)
-      address.business.should eq(false)
+      expect(address.street).to eq('Birch')
+      expect(address.number).to eq(1)
+      expect(address.business).to eq(false)
     end
   end
 
@@ -82,20 +82,20 @@ describe "Embedded" do
 
     it "builds" do
       address = subject.build_address(valid_attributes)
-      address.should be_a_kind_of(Address)
-      address.number.should eq(1)
+      expect(address).to be_a_kind_of(Address)
+      expect(address.number).to eq(1)
     end
 
     it "creates" do
       address = subject.create_address(valid_attributes)
-      address.should be_a_kind_of(Address)
-      address.number.should eq(1)
+      expect(address).to be_a_kind_of(Address)
+      expect(address.number).to eq(1)
     end
 
     it "creates!" do
       address = subject.create_address!(valid_attributes)
-      address.should be_a_kind_of(Address)
-      address.number.should eq(1)
+      expect(address).to be_a_kind_of(Address)
+      expect(address.number).to eq(1)
     end
   end
 
@@ -104,13 +104,13 @@ describe "Embedded" do
 
     context "Invalid" do
       it "validates associated" do
-        subject.address.should_not be_valid
-        subject.should_not be_valid
-        subject.errors['address'].should_not be_empty
+        expect(subject.address).not_to be_valid
+        expect(subject).not_to be_valid
+        expect(subject.errors['address']).not_to be_empty
       end
 
       it "doesn't save parent when validation fails" do
-        subject.save.should be_false
+        expect(subject.save).to be_falsey
       end
     end
   end
