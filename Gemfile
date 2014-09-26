@@ -10,11 +10,11 @@ group :development do
   gem "rdoc"
   gem "bundler"
   gem "jeweler"
-  gem "pry"
+  gem "pry-byebug"
   gem "guard"
   gem "guard-rspec"
 end
 
 gem 'pg'
 gem 'pg-hstore'
-gem 'activerecord', '>=3.2', '<4.1'
+gem 'activerecord', '>=3.2', '<5'

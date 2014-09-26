@@ -45,7 +45,7 @@ An example is worth a thousand words:
 
 ## TODO
 
-* Rails 4.1 support
+* ActiveRecord 5.0 support
 * Query support, e.g. Person.where('address.street' => 'Elm')
 
 ## Contributing to hstore-document

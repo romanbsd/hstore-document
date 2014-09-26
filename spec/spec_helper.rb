@@ -4,6 +4,9 @@ require 'rspec'
 require 'active_record'
 require 'hstore-document'
 require 'pry'
+if ActiveRecord::VERSION::STRING > '4.1'
+  require 'json'
+end
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

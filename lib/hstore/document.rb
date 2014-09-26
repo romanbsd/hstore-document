@@ -51,7 +51,7 @@ module Hstore
         end
         assign_attributes(attributes.except(self.class.serialized_attributes.keys))
       else
-        assign_attributes(attributes)
+        assign_attributes(attributes) if attributes
       end
       changed_attributes.clear
     end
@@ -166,7 +166,7 @@ module Hstore
     module ClassMethods
 
       def from_hstore(data)
-        if ActiveRecord.version.segments[0] < 4
+        if ActiveRecord::VERSION::MAJOR < 4
           data = PgHstore.load(data)
         end
         new(data, serialized: true)

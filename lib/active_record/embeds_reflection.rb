@@ -3,7 +3,7 @@ require 'active_record/reflection'
 
 module ActiveRecord
   module Reflection
-    if (ActiveRecord.version.segments[0] + ActiveRecord.version.segments[1] / 10.0) >= 4.1
+    if ActiveRecord::VERSION::STRING >= '4.1'
       class EmbedsOneReflection < AssociationReflection # :nodoc:
         def initialize(name, scope, options, active_record)
           super(macro, name, scope, options, active_record)

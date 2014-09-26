@@ -2,7 +2,7 @@ require 'active_record/associations/association'
 
 module ActiveRecord
   module Associations
-    if (ActiveRecord.version.segments[0] + ActiveRecord.version.segments[1] / 10.0) >= 4.1
+    if ActiveRecord::VERSION::STRING >= '4.1'
       module ClassMethods
         # @param [Symbol, String] name of association
         # @param scope
