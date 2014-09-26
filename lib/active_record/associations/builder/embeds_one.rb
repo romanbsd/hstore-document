@@ -12,6 +12,10 @@ module ActiveRecord
         def macro
           :embeds_one
         end
+
+        def valid_options
+          super + [:class_name]
+        end
       end
     end
   end
